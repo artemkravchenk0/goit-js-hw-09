@@ -16,3 +16,50 @@ img {
   display: block;
   max-width: 100%;
 }
+
+.start-btn {
+  min-width: 150px;
+  min-height: 30px;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.88;
+  cursor: pointer;
+  border: none;
+  text-align: center;
+  border-radius: 4px;
+  background-color: rgb(5, 113, 201);
+  color: white;
+}
+.start-btn:disabled{
+  background-color: rgb(180, 180, 180);
+}
+
+.timer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.timer .field {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 50px;
+  min-height: 40px;
+  border-radius: 4px;
+  background-color: rgb(233, 97, 73);
+  color: aliceblue;
+}
+
+.field .value {
+  font-size: xxx-large;
+  font-weight: 700;
+}
+
+.field .label {
+  text-transform: uppercase;
+  font-size: small;
+}
