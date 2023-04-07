@@ -10,6 +10,9 @@ body {
   background-color: #fafafa;
   color: #212121;
   line-height: 1.5;
+  width: 100%;
+    height: 100%;
+    background: #6dbcbc;
 }
 
 img {
@@ -17,49 +20,62 @@ img {
   max-width: 100%;
 }
 
-.start-btn {
-  min-width: 150px;
-  min-height: 30px;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 1.88;
-  cursor: pointer;
-  border: none;
-  text-align: center;
-  border-radius: 4px;
-  background-color: rgb(5, 113, 201);
-  color: white;
-}
-.start-btn:disabled{
-  background-color: rgb(180, 180, 180);
-}
-
 .timer {
   display: flex;
-  justify-content: flex-start;
-  align-items: baseline;
-  gap: 20px;
-  padding: 20px 0;
+  gap: 15px;
 }
 
-.timer .field {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-width: 50px;
-  min-height: 40px;
-  border-radius: 4px;
-  background-color: rgb(233, 97, 73);
-  color: aliceblue;
+input {
+  border-radius: 100px;
+  border: 1px solid #eee;
+  padding: 10px;
+  font-weight: 900;
+  text-align: center;
+}
+
+button {
+  background: #EDF0DA;
+    border: none;
+    font-size: 16px;
+    border-radius: 50px;
+    padding: 11px;
+    margin-left: 10px;
+    box-shadow: 0px 10px 13px -7px #98c797, 5px 5px 15px 5px rgba(0,0,0,0);
+    border: 1px solid #b7b7b7;
+    font-weight: 700;
+}
+
+.field {
+
 }
 
 .field .value {
-  font-size: xxx-large;
-  font-weight: 700;
+  display: block;
+  font-size: 48px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.field:nth-child(1) .value {
+  color: #AA4465
+}
+
+.field:nth-child(2) .value {
+  color: #8F5C38
+}
+
+.field:nth-child(3) .value {
+  color: #A89B8C
+}
+
+.field:nth-child(4) .value {
+  color: #F0DFAD
 }
 
 .field .label {
+  font-size: 14px;
   text-transform: uppercase;
-  font-size: small;
+  text-align: center;
+  display: block;
+  font-weight: 700;
 }

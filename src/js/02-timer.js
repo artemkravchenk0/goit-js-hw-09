@@ -1,80 +1,74 @@
-import flatpickr from 'flatpickr';
-
-import 'flatpickr/dist/flatpickr.min.css';
-
+import flatpickr from "flatpickr";
+import "flatpickr/dist/flatpickr.min.css";
 import Notiflix from 'notiflix';
 
-const inputDatetimeEl = document.querySelector('input#datetime-picker');
-const startBtnEl = document.querySelector('button[data-start]');
-const timerDayEl = document.querySelector('[data-days]');
-const timerHourEl = document.querySelector('[data-hours]');
-const timerMinEl = document.querySelector('[data-minutes]');
-const timerSecEl = document.querySelector('[data-seconds]');
+flatpickr("#datetime-picker", {
+    enableTime: true,
+    time_24hr: true,
+    defaultDate: new Date(),
+    minuteIncrement: 1,
+    onClose(selectedDates) {
+        const pickedDate = selectedDates[0];
+        const currentDate = new Date();
+        const startBtn = document.getElementById("start-btn");
 
-startBtnEl.disabled = true;
+        startBtn.disabled = true;
 
-let timerId = null;
+        if( pickedDate < currentDate){
+            Notiflix.Notify.failure("Please choose a date in the future")
+        } else{
+          startBtn.disabled = false;
+        }
 
-let selectedDate = null;
 
-const options = {
-  enableTime: true,
-  time_24hr: true,
-  defaultDate: new Date(),
-  minuteIncrement: 1,
-  onClose(selectedDates) {
-    if (selectedDates[0] <= Date.now()) {
-      Notiflix.Notify.failure('Please choose a date in the future');
-    } else {
-      startBtnEl.disabled = false;
-      return (selectedDate = selectedDates[0]);
-    }
-  },
-};
+        
+      console.log(selectedDates[0]);
+    },
+});
 
-const fp = flatpickr(inputDatetimeEl, options);
 
-startBtnEl.addEventListener('click', handleStartBtnClick);
 
-function handleStartBtnClick(e) {
-  startBtnEl.disabled = true;
+document.getElementById("start-btn").addEventListener("click", event =>{
+const date = document.getElementById("datetime-picker").value
+event.target.disabled = true
+   const intervalId = setInterval(() => {     
 
-  timerId = setInterval(() => {
-    const timerTime = selectedDate - Date.now();
-    
-    const timerData = convertMs(timerTime);
+        const ms = Date.parse(date) - new Date();
+        if (ms < 1000) {
+        
+        clearInterval(intervalId);
+        }
+        startTimer(ms)
+    }, 1000)
+        
+} )
+ const startTimer = (ms) => {
+   
+    const {days, hours, minutes, seconds} = convertMs(ms);
 
-    timerDayEl.textContent = timerData.days;
-    timerHourEl.textContent = timerData.hours;
-    timerMinEl.textContent = timerData.minutes;
-    timerSecEl.textContent = timerData.seconds;
-
-    if (timerTime < 1000) {
-      clearInterval(timerId);
-      return;
-    }
-  }, 1000);
+    document.getElementById("days-value").innerText = padZero(days);
+    document.getElementById("hours-value").innerText = padZero(hours);
+    document.getElementById("minutes-value").innerText = padZero(minutes);
+    document.getElementById("seconds-value").innerText = padZero(seconds);
 }
 
 function convertMs(ms) {
-  const second = 1000;
-  const minute = second * 60;
-  const hour = minute * 60;
-  const day = hour * 24;
+   
+    const second = 1000;
+    const minute = second * 60;
+    const hour = minute * 60;
+    const day = hour * 24;
+  
+    // Remaining days
+    const days = Math.floor(ms / day);
+    // Remaining hours
+    const hours = Math.floor((ms % day) / hour);
+    // Remaining minutes
+    const minutes = Math.floor(((ms % day) % hour) / minute);
+    // Remaining seconds
+    const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+  
+    return { days, hours, minutes, seconds };
+  }
 
-  const days = addLeadingZero(Math.floor(ms / day));
-
-  const hours = addLeadingZero(Math.floor((ms % day) / hour));
-
-  const minutes = addLeadingZero(Math.floor(((ms % day) % hour) / minute));
-
-  const seconds = addLeadingZero(
-    Math.floor((((ms % day) % hour) % minute) / second)
-  );
-
-  return { days, hours, minutes, seconds };
-}
-
-function addLeadingZero(value) {
-  return String(value).padStart(2, '0');
-}
+  const padZero = value => value.toString().padStart(2, '0')
